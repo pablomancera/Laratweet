@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Tweet::class, function (Faker $faker) {
     return [
-        'content' => $faker->text(128),
+        'content' => $faker->text(512),
         'created_at' => $faker->dateTimeThisMonth(),
     ];
 });

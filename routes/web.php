@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ShowUser;
+use App\Tweet;
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('/tweet', 'TweetController');
+Route::resource('/tweet', 'TweetController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/userid/{id}', "ShowUser")->middleware("auth");

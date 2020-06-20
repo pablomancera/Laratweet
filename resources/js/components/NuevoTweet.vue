@@ -1,12 +1,21 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
+            <div>
+                <div class="card" style="width: 64rem;">
+                    <div class="card-header">Publicar tweet</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        <form action="">
+                            <textarea v-model="tweet.content"
+                                name="tweet"
+                                rows="10"
+                                style="box-sizing: border-box; width: 100%;"
+                                maxlength="512"
+                                required
+                            ></textarea>
+                            <button v-on:click="$emit('nuevo-tweet', tweet)">¡Publicar!</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -15,9 +24,7 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+export default {
+    props: ["tweet"]
+}
 </script>

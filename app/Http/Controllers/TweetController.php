@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tweet;
 use Illuminate\Http\Request;
 
 class TweetController extends Controller
@@ -13,7 +14,8 @@ class TweetController extends Controller
      */
     public function index()
     {
-        //
+        $tweet = Tweet::all();
+        return $tweet;
     }
 
     /**
@@ -34,7 +36,10 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tweet = new Tweet();
+        $tweet->content = $request->content;
+        $tweet->user_id = auth()->id();
+        $tweet->save();
     }
 
     /**
@@ -45,7 +50,7 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        //
+        return Tweet::find($id);
     }
 
     /**
