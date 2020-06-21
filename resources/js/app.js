@@ -24,7 +24,10 @@ Vue.use(require("vue-moment"));
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component("tweet-manager", require("./components/TweetManager.vue").default);
+Vue.component(
+    "tweet-manager",
+    require("./components/TweetManager.vue").default
+);
 Vue.component("nuevo-tweet", require("./components/NuevoTweet.vue").default);
 
 /**
@@ -48,19 +51,28 @@ const app = new Vue({
             axios.get("/user").then(users => (this.users = users.data));
         },
         fetchTweets: function() {
-            console.log("recogiendo tweets ;)");
             this.tweets = [];
-            axios.get("/tweet").then(tweets => (this.tweets = tweets.data));
+            axios.get("/tweet").then(tweets => {
+                this.tweets = tweets.data;
+                console.log("recogiendo " + this.lenghtTweets + " tweets");
+            });
         },
-        deleteTweet: function (tweet) {
-            if(confirm("se va a eliminar el tweet de contenido: "+tweet.content)){
-                Axios.delete(`/tweet/${tweet.id}`).then(() => this.tweets.splice(tweet.id-1, 1));
-            };
+        deleteTweet: function(tweet) {
+            if (
+                confirm(
+                    "se va a eliminar el tweet de contenido: " + tweet.content
+                )
+            ) {
+                Axios.delete(`/tweet/${tweet.id}`).then(() => this.fetchTweets());
+            }
         }
     },
     computed: {
         idTweets: function() {
-            return _.orderBy(this.tweets, 'id', 'desc');
+            return _.orderBy(this.tweets, "id", "desc");
+        },
+        lengthTweets: function() {
+            return this.tweets.length;
         }
     }
 });

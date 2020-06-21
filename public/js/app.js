@@ -54742,10 +54742,10 @@ var app = new Vue({
     fetchTweets: function fetchTweets() {
       var _this2 = this;
 
-      console.log("recogiendo tweets ;)");
       this.tweets = [];
       axios.get("/tweet").then(function (tweets) {
-        return _this2.tweets = tweets.data;
+        _this2.tweets = tweets.data;
+        console.log("recogiendo " + _this2.lenghtTweets + " tweets");
       });
     },
     deleteTweet: function deleteTweet(tweet) {
@@ -54753,16 +54753,17 @@ var app = new Vue({
 
       if (confirm("se va a eliminar el tweet de contenido: " + tweet.content)) {
         Axios["delete"]("/tweet/".concat(tweet.id)).then(function () {
-          return _this3.tweets.splice(tweet.id - 1, 1);
+          return _this3.fetchTweets();
         });
       }
-
-      ;
     }
   },
   computed: {
     idTweets: function idTweets() {
-      return _.orderBy(this.tweets, 'id', 'desc');
+      return _.orderBy(this.tweets, "id", "desc");
+    },
+    lengthTweets: function lengthTweets() {
+      return this.tweets.length;
     }
   }
 });

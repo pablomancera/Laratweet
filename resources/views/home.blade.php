@@ -5,7 +5,7 @@
             <nuevo-tweet v-on:fetch-tweets="fetchTweets()"></nuevo-tweet>
             <tweet-manager
                 v-for="tweet in idTweets"
-                :key="tweet.id"
+                :key="lengthTweets"
                 v-bind:user="users[tweet.user_id-1]"
                 v-bind:authuser="{{ Auth::user() }}"
                 v-bind:tweet="tweet"
