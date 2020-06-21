@@ -81,6 +81,9 @@ const app = new Vue({
             Axios.get(`/tweet/${tweet.id}`).then(
                 ftweet => this.tweet = ftweet.data
             );
+        },
+        updateTweet: function(tweet) {
+            Axios.put(`/tweet/${tweet.id}`, tweet).then(this.fetchTweets())
         }
     },
     computed: {

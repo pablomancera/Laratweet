@@ -2070,8 +2070,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["tweet", "user"]
+  props: ["tweet", "user", "authuser"]
 });
 
 /***/ }),
@@ -37725,7 +37739,7 @@ var render = function() {
             _c("div", { staticClass: "card-body" }, [
               _c("p", [_vm._v(_vm._s(_vm.tweet.content))]),
               _vm._v(" "),
-              _c("p", [
+              _c("p", { staticClass: "font-italic" }, [
                 _vm._v(
                   "\n                            Actualizado el\n                            " +
                     _vm._s(
@@ -37839,7 +37853,29 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _c("p", [_vm._v(_vm._s(_vm.tweet.content))]),
+            _vm.user.id === _vm.authuser.id
+              ? _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.tweet.content,
+                      expression: "tweet.content"
+                    }
+                  ],
+                  staticStyle: { "box-sizing": "border-box", width: "100%" },
+                  attrs: { cols: "30", rows: "10", maxlength: "512" },
+                  domProps: { value: _vm.tweet.content },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.tweet, "content", $event.target.value)
+                    }
+                  }
+                })
+              : _c("p", [_vm._v(_vm._s(_vm.tweet.content))]),
             _vm._v(" "),
             _c("p", { staticClass: "font-italic" }, [
               _vm._v(
@@ -37855,7 +37891,36 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("\n                    Close\n                ")]
+            ),
+            _vm._v(" "),
+            _vm.user.id === _vm.authuser.id
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: {
+                      click: function($event) {
+                        return _vm.$emit("actualizar-tweet", _vm.tweet)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Save changes\n                "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ])
         ])
       ])
     ]
@@ -37878,27 +37943,6 @@ var staticRenderFns = [
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n                    Close\n                ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("\n                    Save changes\n                ")]
-      )
-    ])
   }
 ]
 render._withStripped = true
@@ -54968,6 +55012,9 @@ var app = new Vue({
       Axios.get("/tweet/".concat(tweet.id)).then(function (ftweet) {
         return _this4.tweet = ftweet.data;
       });
+    },
+    updateTweet: function updateTweet(tweet) {
+      Axios.put("/tweet/".concat(tweet.id), tweet).then(this.fetchTweets());
     }
   },
   computed: {

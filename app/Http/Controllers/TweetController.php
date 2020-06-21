@@ -73,7 +73,9 @@ class TweetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tweet = Tweet::find($id);
+        $tweet->content = $request->content;
+        $tweet->save();
     }
 
     /**

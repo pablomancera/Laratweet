@@ -23,7 +23,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>{{ tweet.content }}</p>
+                    <textarea
+                        v-if="user.id === authuser.id"
+                        v-model="tweet.content"
+                        cols="30"
+                        rows="10"
+                        maxlength="512"
+                        style="box-sizing: border-box; width: 100%;"
+                    ></textarea>
+                    <p v-else>{{ tweet.content }}</p>
                     <p class="font-italic">
                         {{
                             tweet.updated_at | moment("MMMM Do YYYY, h:mm:ss a")
@@ -38,7 +46,13 @@
                     >
                         Close
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button
+                        v-if="user.id === authuser.id"
+                        type="button"
+                        class="btn btn-primary"
+                        @click="$emit('actualizar-tweet', tweet)"
+                        data-dismiss="modal"
+                    >
                         Save changes
                     </button>
                 </div>
@@ -48,6 +62,6 @@
 </template>
 <script>
 export default {
-    props: ["tweet", "user"]
+    props: ["tweet", "user", "authuser"]
 };
 </script>

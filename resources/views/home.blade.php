@@ -2,6 +2,8 @@
 <ver-tweet
     v-bind:tweet="tweet"
     v-bind:user="users[tweet.user_id-1]"
+    v-bind:authuser="{{ Auth::user() }}"
+    v-on:actualizar-tweet="updateTweet"
 ></ver-tweet>
 <div class="container">
     <div class="row justify-content-center">

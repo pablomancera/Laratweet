@@ -9,7 +9,7 @@ const { default: Axios } = require("axios");
                         <div class="card-header">{{ user.name }} dice...</div>
                         <div class="card-body">
                             <p>{{ tweet.content }}</p>
-                            <p>
+                            <p class="font-italic">
                                 Actualizado el
                                 {{
                                     tweet.updated_at
