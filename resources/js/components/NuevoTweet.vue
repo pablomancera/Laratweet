@@ -15,7 +15,6 @@ const { default: Axios } = require("axios");
                                 rows="10"
                                 style="box-sizing: border-box; width: 100%;"
                                 maxlength="512"
-                                required
                             ></textarea>
                             <button>¡Publicar!</button>
                         </form>
@@ -37,6 +36,10 @@ export default {
     },
     methods: {
         publicarTweet: function(tweet) {
+            if(document.getElementById("post").value.trim() === ''){
+                alert("¡No puedes publicar un tweet vacío!")
+                return
+            }
             axios.post("/tweet", tweet).then(() => {
                 this.$emit("fetch-tweets");
                 document.getElementById("post").value = "";

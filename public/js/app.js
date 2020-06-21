@@ -1935,7 +1935,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1947,6 +1946,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     publicarTweet: function publicarTweet(tweet) {
       var _this = this;
+
+      if (document.getElementById("post").value.trim() === '') {
+        alert("¡No puedes publicar un tweet vacío!");
+        return;
+      }
 
       axios.post("/tweet", tweet).then(function () {
         _this.$emit("fetch-tweets");
@@ -37570,12 +37574,7 @@ var render = function() {
                     }
                   ],
                   staticStyle: { "box-sizing": "border-box", width: "100%" },
-                  attrs: {
-                    id: "post",
-                    rows: "10",
-                    maxlength: "512",
-                    required: ""
-                  },
+                  attrs: { id: "post", rows: "10", maxlength: "512" },
                   domProps: { value: _vm.tweet.content },
                   on: {
                     input: function($event) {
