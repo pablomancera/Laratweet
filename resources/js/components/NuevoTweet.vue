@@ -1,3 +1,5 @@
+const { default: Axios } = require("axios");
+
 <template>
     <div class="container">
         <div class="row justify-content-center">
@@ -6,15 +8,16 @@
                     <div class="card-header">Publicar tweet</div>
 
                     <div class="card-body">
-                        <form action="">
-                            <textarea v-model="tweet.content"
-                                name="tweet"
+                        <form v-on:submit.prevent="publicarTweet(tweet)">
+                            <textarea
+                                v-model="tweet.content"
+                                id="post"
                                 rows="10"
                                 style="box-sizing: border-box; width: 100%;"
                                 maxlength="512"
                                 required
                             ></textarea>
-                            <button v-on:click="$emit('nuevo-tweet', tweet)">¡Publicar!</button>
+                            <button>¡Publicar!</button>
                         </form>
                     </div>
                 </div>
@@ -25,6 +28,20 @@
 
 <script>
 export default {
-    props: ["tweet"]
-}
+    data() {
+        return {
+            tweet: {
+                content: ""
+            }
+        };
+    },
+    methods: {
+        publicarTweet: function(tweet) {
+            axios.post("/tweet", tweet).then(() => {
+                this.$emit("fetch-tweets");
+                document.getElementById("post").value = "";
+            });
+        }
+    }
+};
 </script>

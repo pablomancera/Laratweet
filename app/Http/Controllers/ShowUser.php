@@ -13,8 +13,8 @@ class ShowUser extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($id)
+    public function __invoke()
     {
-        return User::find($id);
+        return User::all();
     }
 }

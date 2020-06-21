@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+"use strict";
+
 const { default: Axios } = require("axios");
 
 require("./bootstrap");
@@ -23,6 +25,7 @@ Vue.use(require("vue-moment"));
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("tweet-manager", require("./components/TweetManager.vue").default);
+Vue.component("nuevo-tweet", require("./components/NuevoTweet.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,5 +34,28 @@ Vue.component("tweet-manager", require("./components/TweetManager.vue").default)
  */
 
 const app = new Vue({
-    el: "#app"
+    el: "#app",
+    data: {
+        users: [],
+        tweets: []
+    },
+    created: function() {
+        this.getUsers();
+        this.fetchTweets();
+    },
+    methods: {
+        getUsers: function() {
+            axios.get("/user").then(users => (this.users = users.data));
+        },
+        fetchTweets: function() {
+            console.log("recogiendo tweets ;)");
+            this.tweets = [];
+            axios.get("/tweet").then(tweets => (this.tweets = tweets.data));
+        }
+    },
+    computed: {
+        reversedTweets: function() {
+            return this.tweets.reverse();
+        }
+    }
 });

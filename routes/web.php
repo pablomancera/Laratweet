@@ -26,4 +26,4 @@ Route::resource('/tweet', 'TweetController')->middleware('auth');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::get('/user/{id}', "ShowUser")->middleware("auth");
+Route::get('/user', "ShowUser")->middleware("auth");
