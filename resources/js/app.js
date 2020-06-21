@@ -23,48 +23,7 @@ Vue.use(require("vue-moment"));
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component("ver-tweet", {
-    props: ["tweet", "user"],
-    template: `<div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ user.name }} dice...</h5>
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                {{ tweet.content }}
-            </div>
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal"
-                >
-                    Close
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>`
-});
+Vue.component("ver-tweet", require("./components/VerTweet.vue").default);
 Vue.component(
     "tweet-manager",
     require("./components/TweetManager.vue").default
@@ -84,8 +43,11 @@ const app = new Vue({
         tweets: [],
         changeCount: 0,
         tweet: {
+            id: 0,
             content: "",
-            user_id: 0
+            user_id: 1,
+            created_at: new Date(),
+            updated_at: new Date() 
         }
     },
     created: function() {
@@ -100,7 +62,6 @@ const app = new Vue({
             this.tweets = [];
             axios.get("/tweet").then(tweets => {
                 this.tweets = tweets.data;
-                console.log("recogiendo " + this.lenghtTweets + " tweets");
             });
         },
         deleteTweet: function(index) {
@@ -117,16 +78,14 @@ const app = new Vue({
             }
         },
         showTweet: function(tweet) {
-            this.tweet.content = tweet.content;
-            this.tweet.user_id = tweet.user_id;
+            Axios.get(`/tweet/${tweet.id}`).then(
+                ftweet => this.tweet = ftweet.data
+            );
         }
     },
     computed: {
         idTweets: function() {
             return _.orderBy(this.tweets, "id", "desc");
-        },
-        lengthTweets: function() {
-            return this.tweets.length;
         }
     }
 });
