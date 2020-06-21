@@ -18,11 +18,10 @@ const { default: Axios } = require("axios");
                             </p>
                         </div>
                         <div class="card-footer">
-                            <div v-if="authuser.id === user.id">
-                                <button @click="$emit('eliminar-tweet', index)" class="btn btn-danger">
+                                <button class="btn btn-primary" @click="$emit('ver-tweet', tweet)" data-toggle="modal" data-target="#exampleModal">Ver</button>
+                                <button v-if="authuser.id === user.id" @click="$emit('eliminar-tweet', index)" class="btn btn-danger">
                                     Eliminar
                                 </button>
-                            </div>
                         </div>
                     </div>
                 </div>

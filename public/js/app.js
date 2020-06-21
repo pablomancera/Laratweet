@@ -2007,7 +2007,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user", "tweet", "authuser", "index"]
 });
@@ -37678,25 +37677,40 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#exampleModal"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("ver-tweet", _vm.tweet)
+                    }
+                  }
+                },
+                [_vm._v("Ver")]
+              ),
+              _vm._v(" "),
               _vm.authuser.id === _vm.user.id
-                ? _c("div", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.$emit("eliminar-tweet", _vm.index)
-                          }
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.$emit("eliminar-tweet", _vm.index)
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                Eliminar\n                            "
-                        )
-                      ]
-                    )
-                  ])
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Eliminar\n                            "
+                      )
+                    ]
+                  )
                 : _vm._e()
             ])
           ])
@@ -54713,6 +54727,10 @@ Vue.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vu
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component("ver-tweet", {
+  props: ["tweet", "user"],
+  template: "<div\n    class=\"modal fade\"\n    id=\"exampleModal\"\n    tabindex=\"-1\"\n    role=\"dialog\"\n    aria-labelledby=\"exampleModalLabel\"\n    aria-hidden=\"true\"\n>\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <h5 class=\"modal-title\" id=\"exampleModalLabel\">{{ user.name }} dice...</h5>\n                <button\n                    type=\"button\"\n                    class=\"close\"\n                    data-dismiss=\"modal\"\n                    aria-label=\"Close\"\n                >\n                    <span aria-hidden=\"true\">&times;</span>\n                </button>\n            </div>\n            <div class=\"modal-body\">\n                {{ tweet.content }}\n            </div>\n            <div class=\"modal-footer\">\n                <button\n                    type=\"button\"\n                    class=\"btn btn-secondary\"\n                    data-dismiss=\"modal\"\n                >\n                    Close\n                </button>\n                <button type=\"button\" class=\"btn btn-primary\">\n                    Save changes\n                </button>\n            </div>\n        </div>\n    </div>\n</div>"
+});
 Vue.component("tweet-manager", __webpack_require__(/*! ./components/TweetManager.vue */ "./resources/js/components/TweetManager.vue")["default"]);
 Vue.component("nuevo-tweet", __webpack_require__(/*! ./components/NuevoTweet.vue */ "./resources/js/components/NuevoTweet.vue")["default"]);
 /**
@@ -54726,7 +54744,11 @@ var app = new Vue({
   data: {
     users: [],
     tweets: [],
-    changeCount: 0
+    changeCount: 0,
+    tweet: {
+      content: "",
+      user_id: 0
+    }
   },
   created: function created() {
     this.getUsers();
@@ -54759,6 +54781,10 @@ var app = new Vue({
           _this3.changeCount += 1;
         });
       }
+    },
+    showTweet: function showTweet(tweet) {
+      this.tweet.content = tweet.content;
+      this.tweet.user_id = tweet.user_id;
     }
   },
   computed: {
