@@ -2009,7 +2009,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["user", "tweet", "authuser"]
+  props: ["user", "tweet", "authuser", "index"]
 });
 
 /***/ }),
@@ -37686,7 +37686,7 @@ var render = function() {
                         staticClass: "btn btn-danger",
                         on: {
                           click: function($event) {
-                            return _vm.$emit("eliminar-tweet", _vm.tweet)
+                            return _vm.$emit("eliminar-tweet", _vm.index)
                           }
                         }
                       },
@@ -54725,7 +54725,8 @@ var app = new Vue({
   el: "#app",
   data: {
     users: [],
-    tweets: []
+    tweets: [],
+    changeCount: 0
   },
   created: function created() {
     this.getUsers();
@@ -54748,12 +54749,14 @@ var app = new Vue({
         console.log("recogiendo " + _this2.lenghtTweets + " tweets");
       });
     },
-    deleteTweet: function deleteTweet(tweet) {
+    deleteTweet: function deleteTweet(index) {
       var _this3 = this;
 
-      if (confirm("se va a eliminar el tweet de contenido: " + tweet.content)) {
-        Axios["delete"]("/tweet/".concat(tweet.id)).then(function () {
-          return _this3.fetchTweets();
+      if (confirm("se va a eliminar el tweet de contenido: " + this.idTweets[index].content)) {
+        Axios["delete"]("/tweet/".concat(this.idTweets[index].id)).then(function () {
+          _this3.idTweets.splice(index, 1);
+
+          _this3.changeCount += 1;
         });
       }
     }

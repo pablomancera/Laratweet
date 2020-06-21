@@ -19,7 +19,7 @@ const { default: Axios } = require("axios");
                         </div>
                         <div class="card-footer">
                             <div v-if="authuser.id === user.id">
-                                <button @click="$emit('eliminar-tweet', tweet)" class="btn btn-danger">
+                                <button @click="$emit('eliminar-tweet', index)" class="btn btn-danger">
                                     Eliminar
                                 </button>
                             </div>
@@ -32,6 +32,6 @@ const { default: Axios } = require("axios");
 </template>
 <script>
 export default {
-    props: ["user", "tweet", "authuser"]
+    props: ["user", "tweet", "authuser", "index"]
 };
 </script>

@@ -40,7 +40,8 @@ const app = new Vue({
     el: "#app",
     data: {
         users: [],
-        tweets: []
+        tweets: [],
+        changeCount: 0
     },
     created: function() {
         this.getUsers();
@@ -57,13 +58,17 @@ const app = new Vue({
                 console.log("recogiendo " + this.lenghtTweets + " tweets");
             });
         },
-        deleteTweet: function(tweet) {
+        deleteTweet: function(index) {
             if (
                 confirm(
-                    "se va a eliminar el tweet de contenido: " + tweet.content
+                    "se va a eliminar el tweet de contenido: " +
+                        this.idTweets[index].content
                 )
             ) {
-                Axios.delete(`/tweet/${tweet.id}`).then(() => this.fetchTweets());
+                Axios.delete(`/tweet/${this.idTweets[index].id}`).then(() => {
+                    this.idTweets.splice(index, 1);
+                    this.changeCount += 1;
+                });
             }
         }
     },
