@@ -1,7 +1,7 @@
 const { default: Axios } = require("axios");
 
 <template>
-    <div>
+    <div style="margin-top: 32px">
         <div class="container">
             <div class="row justify-content-center">
                 <div>
@@ -17,6 +17,13 @@ const { default: Axios } = require("axios");
                                 }}
                             </p>
                         </div>
+                        <div class="card-footer">
+                            <div v-if="authuser.id === user.id">
+                                <button @click="$emit('eliminar-tweet', tweet)" class="btn btn-danger">
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -25,6 +32,6 @@ const { default: Axios } = require("axios");
 </template>
 <script>
 export default {
-    props: ["user", "tweet"]
+    props: ["user", "tweet", "authuser"]
 };
 </script>

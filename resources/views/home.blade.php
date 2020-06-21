@@ -4,10 +4,12 @@
         <div class="col-md-8">
             <nuevo-tweet v-on:fetch-tweets="fetchTweets()"></nuevo-tweet>
             <tweet-manager
-                v-for="(tweet, index) in reversedTweets"
-                :key="index"
+                v-for="tweet in idTweets"
+                :key="tweet.id"
                 v-bind:user="users[tweet.user_id-1]"
+                v-bind:authuser="{{ Auth::user() }}"
                 v-bind:tweet="tweet"
+                v-on:eliminar-tweet="deleteTweet"
             ></tweet-manager>
         </div>
     </div>

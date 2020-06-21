@@ -1935,6 +1935,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1947,7 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
     publicarTweet: function publicarTweet(tweet) {
       var _this = this;
 
-      if (document.getElementById("post").value.trim() === '') {
+      if (document.getElementById("post").value.trim() === "") {
         alert("¡No puedes publicar un tweet vacío!");
         return;
       }
@@ -1997,8 +2001,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["user", "tweet"]
+  props: ["user", "tweet", "authuser"]
 });
 
 /***/ }),
@@ -37550,20 +37561,22 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", [
         _c("div", { staticClass: "card", staticStyle: { width: "64rem" } }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Publicar tweet")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "form",
-              {
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.publicarTweet(_vm.tweet)
-                  }
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.publicarTweet(_vm.tweet)
                 }
-              },
-              [
+              }
+            },
+            [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v("Publicar tweet")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
                 _c("textarea", {
                   directives: [
                     {
@@ -37584,18 +37597,39 @@ var render = function() {
                       _vm.$set(_vm.tweet, "content", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _c("button", [_vm._v("¡Publicar!")])
-              ]
-            )
-          ])
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          )
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          staticStyle: { "margin-left": "90%" },
+          attrs: { type: "submit" }
+        },
+        [
+          _vm._v(
+            "\n                            ¡Publicar!\n                        "
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -37617,7 +37651,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticStyle: { "margin-top": "32px" } }, [
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", [
@@ -37641,6 +37675,29 @@ var render = function() {
                     "\n                        "
                 )
               ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _vm.authuser.id === _vm.user.id
+                ? _c("div", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.$emit("eliminar-tweet", _vm.tweet)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Eliminar\n                            "
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e()
             ])
           ])
         ])
@@ -54690,11 +54747,22 @@ var app = new Vue({
       axios.get("/tweet").then(function (tweets) {
         return _this2.tweets = tweets.data;
       });
+    },
+    deleteTweet: function deleteTweet(tweet) {
+      var _this3 = this;
+
+      if (confirm("se va a eliminar el tweet de contenido: " + tweet.content)) {
+        Axios["delete"]("/tweet/".concat(tweet.id)).then(function () {
+          return _this3.tweets.splice(tweet.id - 1, 1);
+        });
+      }
+
+      ;
     }
   },
   computed: {
-    reversedTweets: function reversedTweets() {
-      return this.tweets.reverse();
+    idTweets: function idTweets() {
+      return _.orderBy(this.tweets, 'id', 'desc');
     }
   }
 });

@@ -51,11 +51,16 @@ const app = new Vue({
             console.log("recogiendo tweets ;)");
             this.tweets = [];
             axios.get("/tweet").then(tweets => (this.tweets = tweets.data));
+        },
+        deleteTweet: function (tweet) {
+            if(confirm("se va a eliminar el tweet de contenido: "+tweet.content)){
+                Axios.delete(`/tweet/${tweet.id}`).then(() => this.tweets.splice(tweet.id-1, 1));
+            };
         }
     },
     computed: {
-        reversedTweets: function() {
-            return this.tweets.reverse();
+        idTweets: function() {
+            return _.orderBy(this.tweets, 'id', 'desc');
         }
     }
 });
