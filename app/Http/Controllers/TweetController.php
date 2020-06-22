@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tweet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TweetController extends Controller
 {
@@ -15,6 +16,7 @@ class TweetController extends Controller
     public function index()
     {
         $tweet = Tweet::all();
+        Log::info("Consultando tweets", ['user' => auth()->id()]);
         return $tweet;
     }
 
@@ -36,10 +38,14 @@ class TweetController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'content' => 'required|max:512'
+        ]);
         $tweet = new Tweet();
         $tweet->content = $request->content;
         $tweet->user_id = auth()->id();
         $tweet->save();
+        Log::info("Tweet almacenado", ['id' => $tweet->id, 'user' => auth()->id()]);
     }
 
     /**
@@ -50,7 +56,9 @@ class TweetController extends Controller
      */
     public function show($id)
     {
-        return Tweet::find($id);
+        $tweet = Tweet::find($id);
+        Log::info("Mostrando tweet", ['id' => $id, 'user' => auth()->id()]);
+        return $tweet;
     }
 
     /**
@@ -73,9 +81,15 @@ class TweetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'content' => 'required|max:512'
+        ]);
         $tweet = Tweet::find($id);
         $tweet->content = $request->content;
-        $tweet->save();
+        if ($tweet->user_id === auth()->id()) {
+            $tweet->save();
+            Log::info("Actualizado tweet", ['id' => $tweet->id, 'user' => auth()->id()]);
+        }
     }
 
     /**
@@ -88,5 +102,6 @@ class TweetController extends Controller
     {
         $tweet = Tweet::find($id);
         $tweet->delete();
+        Log::info("Tweet eliminado", ['id' => $id, 'user' => auth()->id()]);
     }
 }
