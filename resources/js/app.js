@@ -47,7 +47,7 @@ const app = new Vue({
             content: "",
             user_id: 1,
             created_at: new Date(),
-            updated_at: new Date() 
+            updated_at: new Date()
         }
     },
     created: function() {
@@ -60,9 +60,7 @@ const app = new Vue({
         },
         fetchTweets: function() {
             this.tweets = [];
-            axios.get("/tweet").then(tweets => {
-                this.tweets = tweets.data;
-            });
+            axios.get("/tweet").then(tweets => (this.tweets = tweets.data));
         },
         deleteTweet: function(index) {
             if (
@@ -79,11 +77,11 @@ const app = new Vue({
         },
         showTweet: function(tweet) {
             Axios.get(`/tweet/${tweet.id}`).then(
-                ftweet => this.tweet = ftweet.data
+                ftweet => (this.tweet = ftweet.data)
             );
         },
         updateTweet: function(tweet) {
-            Axios.put(`/tweet/${tweet.id}`, tweet).then(this.fetchTweets())
+            Axios.put(`/tweet/${tweet.id}`, tweet).then(this.fetchTweets());
         }
     },
     computed: {

@@ -55065,7 +55065,7 @@ var app = new Vue({
 
       this.tweets = [];
       axios.get("/tweet").then(function (tweets) {
-        _this2.tweets = tweets.data;
+        return _this2.tweets = tweets.data;
       });
     },
     deleteTweet: function deleteTweet(index) {

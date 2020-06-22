@@ -1,7 +1,7 @@
 @extends('layouts.app') @section('content')
 <ver-tweet
     v-bind:tweet="tweet"
-    v-bind:user="users[tweet.user_id-1]"
+    v-bind:user="users.find(user => user.id === tweet.user_id)"
     v-bind:authuser="{{ Auth::user() }}"
     v-on:actualizar-tweet="updateTweet"
 ></ver-tweet>
@@ -12,7 +12,7 @@
             <tweet-manager
                 v-for="(tweet, index) in idTweets"
                 :key="changeCount"
-                v-bind:user="users[tweet.user_id-1]"
+                v-bind:user="users.find(user => user.id === tweet.user_id)"
                 v-bind:authuser="{{ Auth::user() }}"
                 v-bind:tweet="tweet"
                 v-bind:index="index"
