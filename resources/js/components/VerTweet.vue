@@ -9,7 +9,10 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div
+                    class="modal-header"
+                    style="background-color: #577284; color: white;"
+                >
                     <h5 class="modal-title" id="exampleModalLabel">
                         {{ user.name }} dice...
                     </h5>
@@ -29,22 +32,22 @@
                         cols="30"
                         rows="10"
                         maxlength="512"
-                        style="box-sizing: border-box; width: 100%;"
+                        class="tweetinput"
                     ></textarea>
                     <p v-else>{{ tweet.content }}</p>
-                    <p class="font-italic">
+                </div>
+                <div class="modal-footer">
+                    <i style="flex-grow: 3">
                         {{
                             tweet.updated_at | moment("MMMM Do YYYY, h:mm:ss a")
                         }}
-                    </p>
-                </div>
-                <div class="modal-footer">
+                    </i>
                     <button
                         type="button"
                         class="btn btn-secondary"
                         data-dismiss="modal"
                     >
-                        Close
+                        Cerrar
                     </button>
                     <button
                         v-if="user.id === authuser.id"
@@ -53,7 +56,7 @@
                         @click="$emit('actualizar-tweet', tweet)"
                         data-dismiss="modal"
                     >
-                        Save changes
+                        Guardar cambios
                     </button>
                 </div>
             </div>

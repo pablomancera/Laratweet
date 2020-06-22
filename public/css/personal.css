@@ -1,0 +1,39 @@
+.bluebar {
+    background-color: #577284 !important;
+    color: white !important;
+}
+
+.py-4 {
+    margin-top: 59px;
+    background: radial-gradient(
+            circle,
+            transparent 20%,
+            slategray 20%,
+            slategray 80%,
+            transparent 80%,
+            transparent
+        ),
+        radial-gradient(
+                circle,
+                transparent 20%,
+                slategray 20%,
+                slategray 80%,
+                transparent 80%,
+                transparent
+            )
+            50px 50px,
+        linear-gradient(#a8b1bb 8px, transparent 8px) 0 -4px,
+        linear-gradient(90deg, #a8b1bb 8px, transparent 8px) -4px 0;
+    background-color: slategray;
+    background-size: 100px 100px, 100px 100px, 50px 50px, 50px 50px;
+    background-attachment: fixed;
+}
+
+.tweetinput {
+    box-sizing: border-box;
+    width: 100%;
+    border-style: dotted;
+    border-radius: 16px;
+    padding: 5px;
+}
+

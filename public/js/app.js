@@ -1939,6 +1939,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2007,6 +2012,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user", "tweet", "authuser", "index"]
 });
@@ -2022,6 +2035,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -37648,7 +37664,7 @@ var render = function() {
               }
             },
             [
-              _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "card-header bluebar" }, [
                 _vm._v("Publicar tweet")
               ]),
               _vm._v(" "),
@@ -37662,8 +37678,13 @@ var render = function() {
                       expression: "tweet.content"
                     }
                   ],
-                  staticStyle: { "box-sizing": "border-box", width: "100%" },
-                  attrs: { id: "post", rows: "10", maxlength: "512" },
+                  staticClass: "tweetinput",
+                  attrs: {
+                    id: "post",
+                    rows: "8",
+                    maxlength: "512",
+                    placeholder: "Escribe algo..."
+                  },
                   domProps: { value: _vm.tweet.content },
                   on: {
                     input: function($event) {
@@ -37732,25 +37753,36 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", [
           _c("div", { staticClass: "card", staticStyle: { width: "64rem" } }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(_vm._s(_vm.user.name) + " dice...")
-            ]),
+            _vm.authuser.id == _vm.user.id
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "card-header",
+                    staticStyle: {
+                      "background-color": "#577284",
+                      color: "white"
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.user.name) + " dice...")]
+                )
+              : _c(
+                  "div",
+                  {
+                    staticClass: "card-header",
+                    staticStyle: {
+                      "background-color": "#77a8a8",
+                      color: "white"
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.user.name) + " dice...")]
+                ),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("p", [_vm._v(_vm._s(_vm.tweet.content))]),
-              _vm._v(" "),
-              _c("p", { staticClass: "font-italic" }, [
-                _vm._v(
-                  "\n                            Actualizado el\n                            " +
-                    _vm._s(
-                      _vm._f("moment")(
-                        _vm.tweet.updated_at,
-                        "MMMM Do YYYY, h:mm:ss a"
-                      )
-                    ) +
-                    "\n                        "
-                )
-              ])
+              _vm._v(
+                "\n                        " +
+                  _vm._s(_vm.tweet.content) +
+                  "\n                    "
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-footer" }, [
@@ -37788,7 +37820,41 @@ var render = function() {
                       )
                     ]
                   )
-                : _vm._e()
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.tweet.updated_at === _vm.tweet.created_at
+                ? _c(
+                    "i",
+                    { staticStyle: { float: "right", "line-height": "37px" } },
+                    [
+                      _vm._v(
+                        "\n                            Publicado el\n                            " +
+                          _vm._s(
+                            _vm._f("moment")(
+                              _vm.tweet.created_at,
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          ) +
+                          "\n                        "
+                      )
+                    ]
+                  )
+                : _c(
+                    "i",
+                    { staticStyle: { float: "right", "line-height": "37px" } },
+                    [
+                      _vm._v(
+                        "\n                            Actualizado el\n                            " +
+                          _vm._s(
+                            _vm._f("moment")(
+                              _vm.tweet.updated_at,
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          ) +
+                          "\n                        "
+                      )
+                    ]
+                  )
             ])
           ])
         ])
@@ -37833,24 +37899,31 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _c("div", { staticClass: "modal-header" }, [
-            _c(
-              "h5",
-              {
-                staticClass: "modal-title",
-                attrs: { id: "exampleModalLabel" }
-              },
-              [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.user.name) +
-                    " dice...\n                "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm._m(0)
-          ]),
+          _c(
+            "div",
+            {
+              staticClass: "modal-header",
+              staticStyle: { "background-color": "#577284", color: "white" }
+            },
+            [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.user.name) +
+                      " dice...\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _vm.user.id === _vm.authuser.id
@@ -37863,7 +37936,7 @@ var render = function() {
                       expression: "tweet.content"
                     }
                   ],
-                  staticStyle: { "box-sizing": "border-box", width: "100%" },
+                  staticClass: "tweetinput",
                   attrs: { cols: "30", rows: "10", maxlength: "512" },
                   domProps: { value: _vm.tweet.content },
                   on: {
@@ -37875,9 +37948,11 @@ var render = function() {
                     }
                   }
                 })
-              : _c("p", [_vm._v(_vm._s(_vm.tweet.content))]),
-            _vm._v(" "),
-            _c("p", { staticClass: "font-italic" }, [
+              : _c("p", [_vm._v(_vm._s(_vm.tweet.content))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c("i", { staticStyle: { "flex-grow": "3" } }, [
               _vm._v(
                 "\n                    " +
                   _vm._s(
@@ -37888,17 +37963,15 @@ var render = function() {
                   ) +
                   "\n                "
               )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
+            ]),
+            _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-secondary",
                 attrs: { type: "button", "data-dismiss": "modal" }
               },
-              [_vm._v("\n                    Close\n                ")]
+              [_vm._v("\n                    Cerrar\n                ")]
             ),
             _vm._v(" "),
             _vm.user.id === _vm.authuser.id
@@ -37915,7 +37988,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                    Save changes\n                "
+                      "\n                    Guardar cambios\n                "
                     )
                   ]
                 )

@@ -6,19 +6,24 @@ const { default: Axios } = require("axios");
             <div>
                 <div class="card" style="width: 64rem;">
                     <form v-on:submit.prevent="publicarTweet(tweet)">
-                        <div class="card-header">Publicar tweet</div>
+                        <div class="card-header bluebar">Publicar tweet</div>
 
                         <div class="card-body">
                             <textarea
                                 v-model="tweet.content"
+                                class="tweetinput"
                                 id="post"
-                                rows="10"
-                                style="box-sizing: border-box; width: 100%;"
+                                rows="8"
                                 maxlength="512"
+                                placeholder="Escribe algo..."
                             ></textarea>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-primary" style="margin-left: 90%">
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                style="margin-left: 90%"
+                            >
                                 ¡Publicar!
                             </button>
                         </div>
