@@ -101,7 +101,9 @@ class TweetController extends Controller
     public function destroy($id)
     {
         $tweet = Tweet::find($id);
-        $tweet->delete();
-        Log::info("Tweet eliminado", ['id' => $id, 'user' => auth()->id()]);
+        if ($tweet->user_id === auth()->id()) {
+            $tweet->delete();
+            Log::info("Tweet eliminado", ['id' => $id, 'user' => auth()->id()]);
+        }
     }
 }
